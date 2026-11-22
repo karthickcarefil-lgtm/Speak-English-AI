@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+<meta name="theme-color" content="#11101d"><title>Speak English AI</title>
+<style>
+:root{--bg:#100f1b;--panel:#1e1b2e;--panel2:#292440;--purple:#9b7bff;--purple2:#6d4be8;--text:#f8f6ff;--muted:#b8b1cc;--green:#66d9a5;--red:#ff8c9c}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font:15px system-ui,-apple-system,Segoe UI,sans-serif}
+header{padding:18px 16px 12px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;background:#100f1bf2;backdrop-filter:blur(12px);z-index:5}
+.brand{display:flex;gap:10px;align-items:center;font-weight:800}.logo{width:42px;height:42px;border-radius:14px;background:linear-gradient(135deg,#a78bfa,#653ce0);display:grid;place-items:center;font-size:22px}
+small,.muted{color:var(--muted)}.wrap{padding:8px 15px 100px;max-width:760px;margin:auto}
+.hero{background:linear-gradient(135deg,#302451,#211b3b 70%,#1b1a2d);padding:20px;border-radius:22px;margin:8px 0 18px}
+.eyebrow{color:#d4c7ff;font-size:12px;font-weight:800;letter-spacing:1px}.hero h1{font-size:27px;margin:8px 0}.hero p{color:#d1c8e7;margin:0 0 14px}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:16px}.stat{background:#ffffff12;padding:11px;border-radius:14px}.stat b{display:block;font-size:18px}.stat span{font-size:11px;color:#d1c8e7}
+h2{font-size:18px;margin:20px 0 10px}.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.card{background:var(--panel);border:1px solid #ffffff0c;border-radius:17px;padding:15px;margin-bottom:10px}.tile{min-height:112px;text-align:left;color:var(--text);cursor:pointer}.tile .ico{font-size:24px;margin-bottom:10px}.tile b{display:block}.tile small{display:block;margin-top:4px}
+button,.btn{border:0;border-radius:13px;padding:12px 15px;background:var(--purple2);color:white;font-weight:700;font-size:14px;cursor:pointer}
+button.secondary{background:var(--panel2);border:1px solid #51466e}button.ghost{background:transparent;border:1px solid #5b5074}
+button:disabled{opacity:.45;cursor:not-allowed}input,textarea,select{width:100%;padding:13px;border-radius:12px;border:1px solid #504766;background:#151323;color:white;font:inherit;margin:7px 0}
+.row{display:flex;gap:9px;align-items:center}.row>*{flex:1}.pill{display:inline-block;background:#382c5c;color:#d8cbff;border-radius:30px;padding:5px 10px;font-size:11px;font-weight:700}
+.progress{height:8px;background:#3b3550;border-radius:10px;overflow:hidden;margin:10px 0}.progress>i{display:block;height:100%;background:linear-gradient(90deg,#8b6cff,#c0aaff);width:0}
+.lesson{display:flex;gap:12px;align-items:center;padding:14px;background:var(--panel);border-radius:15px;margin:8px 0;cursor:pointer}.lesson .num{width:38px;height:38px;border-radius:12px;background:#392e5b;display:grid;place-items:center;color:#d8caff;font-weight:800}
+.answer{display:block;width:100%;text-align:left;margin:8px 0;background:#292440;border:1px solid #51466e}.answer.selected{border-color:var(--purple);background:#3a2c62}
+.feedback{padding:12px;border-radius:12px;background:#19382f;color:#9bf0c7;margin-top:10px}.bad{background:#42232e;color:#ffb1bd}
+.bottom{position:fixed;bottom:0;left:0;right:0;background:#171525f5;backdrop-filter:blur(14px);border-top:1px solid #ffffff14;display:grid;grid-template-columns:repeat(5,1fr);padding:8px 4px max(8px,env(safe-area-inset-bottom));z-index:10}
+.bottom button{background:transparent;color:#a9a2bb;padding:7px 2px;font-size:11px;border-radius:10px}.bottom button.active{color:#c8b8ff;background:#30264e}.bottom span{display:block;font-size:19px;margin-bottom:2px}
+.chatline{padding:12px;border-radius:14px;margin:8px 0;max-width:90%;line-height:1.45}.bot{background:#30294a}.user{background:#49358a;margin-left:auto}
+.word{display:inline-block;background:#393052;border-radius:9px;padding:9px 11px;margin:4px;cursor:pointer}
+.hidden{display:none!important}.center{text-align:center}.bigword{font-size:25px;font-weight:800;color:#d1c1ff}.footnote{font-size:12px;color:var(--muted);line-height:1.5}
+@media(min-width:650px){.wrap{padding-top:18px}.grid{grid-template-columns:repeat(3,1fr)}}
+</style></head>
+<body>
+<header><div class="brand"><div class="logo">Aa</div><div>Speak English AI<small style="display:block;font-weight:500">Learn • Speak • Become Fluent</small></div></div><span class="pill">100% FREE</span></header>
+<main class="wrap" id="app"></main>
+<nav class="bottom">
+<button data-tab="home" class="active"><span>⌂</span>Home</button>
+<button data-tab="learn"><span>📚</span>Lessons</button>
+<button data-tab="speak"><span>🎙️</span>Speaking</button>
+<button data-tab="practice"><span>✍️</span>Practice</button>
+<button data-tab="progress"><span>📈</span>Progress</button>
+</nav>
+<script>
+const $=s=>document.querySelector(s);
+const lessons=[
+ {title:"Basic English",sub:"Greetings, introductions and simple sentences",level:"Beginner",items:[
+  ["Hello","வணக்கம்","Hello, my name is Karthick.","வணக்கம், என் பெயர் கார்த்திக்."],
+  ["How are you?","நீங்கள் எப்படி இருக்கிறீர்கள்?","I am fine, thank you.","நான் நன்றாக இருக்கிறேன், நன்றி."],
+  ["Thank you","நன்றி","Thank you for your help.","உங்கள் உதவிக்கு நன்றி."],
+  ["I understand","எனக்குப் புரிகிறது","I understand the lesson.","எனக்கு பாடம் புரிகிறது."]]},
+ {title:"Daily English",sub:"Useful sentences for everyday life",level:"Beginner",items:[
+  ["I am going to work.","நான் வேலைக்குச் செல்கிறேன்.","I am going to work now.","நான் இப்போது வேலைக்குச் செல்கிறேன்."],
+  ["What are you doing?","நீங்கள் என்ன செய்கிறீர்கள்?","What are you doing now?","நீங்கள் இப்போது என்ன செய்கிறீர்கள்?"],
+  ["I will call you later.","நான் உங்களைப் பிறகு அழைக்கிறேன்.","I will call you in the evening.","நான் மாலையில் அழைக்கிறேன்."],
+  ["Please speak slowly.","தயவுசெய்து மெதுவாகப் பேசுங்கள்.","Please speak slowly. I am learning English.","மெதுவாகப் பேசுங்கள். நான் ஆங்கிலம் கற்றுக்கொள்கிறேன்."]]},
+ {title:"Grammar",sub:"Build correct English sentences",level:"Beginner",items:[
+  ["I am","நான் இருக்கிறேன்","I am happy.","நான் மகிழ்ச்சியாக இருக்கிறேன்."],
+  ["He is","அவன் இருக்கிறான்","He is my friend.","அவன் என் நண்பன்."],
+  ["They are","அவர்கள் இருக்கிறார்கள்","They are students.","அவர்கள் மாணவர்கள்."],
+  ["She goes","அவள் செல்கிறாள்","She goes to school every day.","அவள் தினமும் பள்ளிக்குச் செல்கிறாள்."]]},
+ {title:"Vocabulary",sub:"Common words with Tamil meanings",level:"All levels",items:[
+  ["Improve","மேம்படுத்து","I want to improve my English.","என் ஆங்கிலத்தை மேம்படுத்த விரும்புகிறேன்."],
+  ["Confident","தன்னம்பிக்கை உள்ள","I feel confident.","எனக்குத் தன்னம்பிக்கை இருக்கிறது."],
+  ["Opportunity","வாய்ப்பு","This is a good opportunity.","இது ஒரு நல்ல வாய்ப்பு."],
+  ["Practice","பயிற்சி","Practice every day.","தினமும் பயிற்சி செய்யுங்கள்."]]},
+ {title:"Advanced English",sub:"Longer expressions and confident speaking",level:"Advanced",items:[
+  ["In my opinion","என் கருத்துப்படி","In my opinion, practice is important.","என் கருத்துப்படி பயிற்சி முக்கியம்."],
+  ["As far as I know","எனக்குத் தெரிந்தவரை","As far as I know, he is busy.","எனக்குத் தெரிந்தவரை அவர் வேலையாக இருக்கிறார்."],
+  ["Could you please clarify?","தயவுசெய்து தெளிவுபடுத்த முடியுமா?","Could you please clarify this point?","இந்த விஷயத்தைத் தெளிவுபடுத்த முடியுமா?"],
+  ["I appreciate your help","உங்கள் உதவியை மதிக்கிறேன்","I really appreciate your help.","உங்கள் உதவியை நான் மிகவும் மதிக்கிறேன்."]]}
+];
+const quizzes=[
+ {q:"She ___ to school every day.",opts:["go","goes","going"],a:"goes",why:"She / He / It உடன் Present Simple-ல் verb-க்கு s அல்லது es சேரும்."},
+ {q:"I ___ a designer.",opts:["am","is","are"],a:"am",why:"I உடன் am பயன்படுத்த வேண்டும்."},
+ {q:"They ___ playing cricket.",opts:["is","am","are"],a:"are",why:"They உடன் are பயன்படுத்த வேண்டும்."},
+ {q:"What ___ your name?",opts:["are","is","am"],a:"is",why:"What is your name? என்பதே சரியான கேள்வி."},
+ {q:"I have lived here ___ 2020.",opts:["for","since","from"],a:"since",why:"குறிப்பிட்ட தொடக்க நேரத்துடன் since பயன்படுத்தப்படும்."}
+];
+let state=JSON.parse(localStorage.getItem("sea_state")||'{"done":[],"streak":0,"last":"","words":0,"quiz":0}');
+let tab="home", lessonIndex=0, lessonStep=0, quizIndex=0, selected="", jumbleWords=[], builtWords=[];
+function save(){localStorage.setItem("sea_state",JSON.stringify(state))}
+function header(title,sub=""){return `<h2>${title}</h2>${sub?`<p class="muted">${sub}</p>`:""}`}
+function home(){return `
+<section class="hero"><div class="eyebrow">WELCOME TO YOUR ENGLISH JOURNEY</div><h1>வணக்கம்! 👋<br>Let's speak English.</h1><p>தினமும் கொஞ்சம் பயிற்சி. தன்னம்பிக்கையுடன் ஆங்கிலம் பேசலாம்!</p><button onclick="go('learn')">Start Learning →</button>
+<div class="stats"><div class="stat"><b>🔥 ${state.streak}</b><span>Day streak</span></div><div class="stat"><b>📚 ${state.done.length}</b><span>Lessons done</span></div><div class="stat"><b>⭐ ${state.words}</b><span>Practice points</span></div></div></section>
+${header("Today's learning","10–15 minutes a day makes a difference")}
+<div class="card"><div class="row"><b>Daily goal</b><span class="pill">Free forever</span></div><div class="progress"><i style="width:${Math.min(100,state.done.length*10)}%"></i></div><small>${state.done.length} learning activities completed</small><button style="width:100%;margin-top:12px" onclick="go('learn')">Continue learning</button></div>
+${header("Explore practice")}
+<div class="grid">
+<div class="card tile" onclick="go('speak')"><div class="ico">🎙️</div><b>Speaking Practice</b><small>Speak aloud and listen</small></div>
+<div class="card tile" onclick="go('chat')"><div class="ico">🤖</div><b>AI Teacher</b><small>Conversation practice</small></div>
+<div class="card tile" onclick="go('translate')"><div class="ico">🌐</div><b>Translation</b><small>Tamil ↔ English</small></div>
+<div class="card tile" onclick="go('practice')"><div class="ico">🧩</div><b>Jumble Words</b><small>Build sentences</small></div>
+</div>`}
+function learn(){return `${header("English Lessons","Beginner to Advanced • Tamil explanations")}
+${lessons.map((l,i)=>`<div class="lesson" onclick="openLesson(${i})"><div class="num">0${i+1}</div><div style="flex:1"><b>${l.title}</b><small style="display:block">${l.sub}</small></div><span class="pill">${l.level}</span></div>`).join("")}
+<div class="card"><b>Learning path</b><p class="muted">Basic words → Daily sentences → Grammar → Conversation → Advanced English</p></div>`}
+function openLesson(i){lessonIndex=i;lessonStep=0;renderLesson()}
+function renderLesson(){let l=lessons[lessonIndex],it=l.items[lessonStep];$("#app").innerHTML=`<button class="secondary" onclick="go('learn')">← All lessons</button>${header(l.title,`Lesson ${lessonStep+1} of ${l.items.length}`)}
+<div class="card center"><span class="pill">${l.level}</span><p class="muted">English phrase</p><div class="bigword">${it[0]}</div><p>${it[1]}</p><button class="secondary" onclick="speakText('${esc(it[0])}')">🔊 Listen</button><hr style="border-color:#ffffff18;margin:20px 0"><b>Example sentence</b><h3>${it[2]}</h3><p class="muted">${it[3]}</p><button onclick="nextLesson()"> ${lessonStep===l.items.length-1?"Complete lesson":"Next phrase →"}</button></div>`}
+function nextLesson(){lessonStep++;if(lessonStep>=lessons[lessonIndex].items.length){let id=lessons[lessonIndex].title;if(!state.done.includes(id))state.done.push(id);state.words+=5;save();$("#app").innerHTML=`<div class="card center"><div style="font-size:50px">🎉</div><h2>Lesson completed!</h2><p class="muted">அருமை! தொடர்ந்து பயிற்சி செய்யுங்கள்.</p><button onclick="go('learn')">Back to lessons</button></div>`}else renderLesson()}
+function speak(){return `${header("Speaking Practice","Listen, speak and build confidence")}
+<div class="card center"><div style="font-size:38px">🎙️</div><p class="muted">Read this sentence aloud</p><div class="bigword" id="speakSentence">I want to improve my English.</div><p>நான் என் ஆங்கிலத்தை மேம்படுத்த விரும்புகிறேன்.</p><div class="row"><button class="secondary" onclick="speakText(document.getElementById('speakSentence').textContent)">🔊 Listen</button><button onclick="startRecognition()">🎤 Speak now</button></div><p id="heard" class="muted">Your spoken words will appear here.</p><div id="speechResult"></div></div>
+<div class="card"><b>Daily speaking challenge</b><p>Introduce yourself in 3 sentences.</p><button class="secondary" onclick="startRecognition()">Start microphone</button></div>
+<p class="footnote">Microphone permission is requested only when you tap Speak. Speech recognition availability depends on your Android browser and Google speech service.</p>`}
+function practice(){return `${header("Practice Zone","Grammar • Jumble Words • Quick quiz")}
+<div class="grid"><div class="card tile" onclick="startQuiz()"><div class="ico">📝</div><b>Grammar Quiz</b><small>Test your knowledge</small></div><div class="card tile" onclick="startJumble()"><div class="ico">🧩</div><b>Jumble Words</b><small>Arrange the sentence</small></div><div class="card tile" onclick="go('vocab')"><div class="ico">📖</div><b>Vocabulary</b><small>Learn new words</small></div><div class="card tile" onclick="go('translate')"><div class="ico">🌐</div><b>Translation</b><small>Tamil and English</small></div></div>`}
+function startQuiz(){quizIndex=0;renderQuiz()}
+function renderQuiz(){let q=quizzes[quizIndex];$("#app").innerHTML=`<button class="secondary" onclick="go('practice')">← Practice</button>${header("Grammar Quiz",`Question ${quizIndex+1} of ${quizzes.length}`)}<div class="card"><h3>${q.q}</h3>${q.opts.map(o=>`<button class="answer" onclick="checkAnswer('${o}',this)">${o}</button>`).join("")}<div id="quizFeedback"></div></div>`}
+function checkAnswer(a,el){let q=quizzes[quizIndex];document.querySelectorAll(".answer").forEach(b=>b.disabled=true);let ok=a===q.a;$("#quizFeedback").innerHTML=`<div class="feedback ${ok?"":"bad"}">${ok?"Correct! 🎉":"Not quite."} ${q.why}<br><button style="margin-top:10px" onclick="nextQuiz()">${quizIndex===quizzes.length-1?"Finish":"Next question"}</button></div>`;if(ok){state.quiz++;state.words++;save()}}
+function nextQuiz(){quizIndex++;if(quizIndex>=quizzes.length){$("#app").innerHTML=`<div class="card center"><h2>Quiz complete! 🎉</h2><p>You finished the grammar quiz.</p><button onclick="go('practice')">Back to practice</button></div>`}else renderQuiz()}
+const jumbleBank=[{words:["English","my","improve","I","to","want"],answer:"I want to improve my English."},{words:["every","practice","day","I"],answer:"I practice every day."},{words:["you","are","how"],answer:"How are you?"}];let jumbleIndex=0;
+function startJumble(){jumbleIndex=0;renderJumble()}
+function renderJumble(){let j=jumbleBank[jumbleIndex];builtWords=[];jumbleWords=[...j.words].sort(()=>Math.random()-.5);$("#app").innerHTML=`<button class="secondary" onclick="go('practice')">← Practice</button>${header("Jumble Words",`Challenge ${jumbleIndex+1} of ${jumbleBank.length}`)}<div class="card"><p class="muted">Tap the words in the correct order.</p><div id="built" style="min-height:48px;background:#151323;border-radius:12px;padding:7px"></div><div id="wordBank">${jumbleWords.map((w,i)=>`<span class="word" onclick="pickWord(${i})" id="w${i}">${w}</span>`).join("")}</div><button onclick="checkJumble()">Check answer</button> <button class="secondary" onclick="renderJumble()">Reset</button><div id="jumbleFeedback"></div></div>`}
+function pickWord(i){let el=$("#w"+i);if(el.style.opacity==="0.3")return;el.style.opacity=".3";builtWords.push(jumbleWords[i]);$("#built").innerHTML=builtWords.map(w=>`<span class="word">${w}</span>`).join("")}
+function checkJumble(){let j=jumbleBank[jumbleIndex],ans=builtWords.join(" ").replace(/[?.!]/g,"").toLowerCase(),correct=j.answer.replace(/[?.!]/g,"").toLowerCase();let ok=ans===correct;$("#jumbleFeedback").innerHTML=`<div class="feedback ${ok?"":"bad"}">${ok?"Correct! Great job!":"Try again. Correct sentence: "+j.answer}<br><button style="margin-top:8px" onclick="nextJumble()">${jumbleIndex===jumbleBank.length-1?"Finish":"Next"}</button></div>`;if(ok){state.words++;save()}}
+function nextJumble(){jumbleIndex++;if(jumbleIndex>=jumbleBank.length)go('practice');else renderJumble()}
+function vocab(){let words=lessons[3].items;return `${header("Vocabulary Builder","Useful English words with Tamil meaning")}${words.map(w=>`<div class="card"><div class="row"><div style="flex:1"><b class="bigword" style="font-size:20px">${w[0]}</b><div class="muted">${w[1]}</div><small>${w[2]}</small></div><button class="secondary" onclick="speakText('${esc(w[0])}')">🔊</button></div></div>`).join("")}`}
+function translate(){return `${header("Tamil ↔ English Translation","Quick translation helper")}
+<div class="card"><label>Enter a sentence</label><textarea id="transText" rows="3" placeholder="தமிழில் அல்லது ஆங்கிலத்தில் எழுதுங்கள்..."></textarea><button onclick="googleTranslate()">Open Google Translate ↗</button><p class="footnote">Google Translate-ல் உங்கள் உரையை மொழிபெயர்க்கலாம். இந்த prototype-ல் தனியாக Google API key தேவையில்லை.</p></div>
+<div class="card"><b>Useful examples</b><p>நான் நன்றாக இருக்கிறேன். → I am fine.</p><p>நான் ஆங்கிலம் கற்றுக்கொள்கிறேன். → I am learning English.</p><p>தயவுசெய்து உதவுங்கள். → Please help me.</p></div>`}
+function chat(){return `${header("AI English Teacher","Practice a conversation and learn to reply")}
+<div class="card"><span class="pill">DEMO TEACHER</span><div id="chatbox"><div class="chatline bot">Hello! 👋 Let's practise English. Tell me: What is your name?</div></div><input id="chatInput" placeholder="Type your answer in English..." onkeydown="if(event.key==='Enter')sendChat()"><button style="width:100%" onclick="sendChat()">Send message</button><p class="footnote">This version includes guided demo replies. Live Gemini AI needs a secure Google AI connection (Firebase AI Logic); it is not safe to put a private API key directly inside an APK.</p></div>`}
+function sendChat(){let inp=$("#chatInput"),v=inp.value.trim();if(!v)return;let box=$("#chatbox");box.innerHTML+=`<div class="chatline user">${escapeHtml(v)}</div>`;let reply=/name/i.test(v)?"Nice to meet you! Now tell me, where are you from?":/chennai/i.test(v)?"Great! Chennai is a wonderful city. Try this sentence: I live in Chennai.":/work|designer/i.test(v)?"Good! You can say: I work as a designer. What do you like about your work?":"Good effort! A clearer sentence is: “I am learning English every day.” Keep practising!";box.innerHTML+=`<div class="chatline bot">${reply}</div>`;inp.value="";box.scrollTop=box.scrollHeight;state.words++;save()}
+function progress(){let pct=Math.min(100,state.done.length/lessons.length*100);return `${header("Your Progress","Your learning data is saved on this device")}
+<div class="grid"><div class="card"><div class="bigword">${state.done.length}</div><small>Lessons completed</small></div><div class="card"><div class="bigword">${state.quiz}</div><small>Correct quiz answers</small></div><div class="card"><div class="bigword">${state.words}</div><small>Practice points</small></div></div>
+<div class="card"><b>Course completion</b><div class="progress"><i style="width:${pct}%"></i></div><small>${Math.round(pct)}% of lesson groups completed</small></div>
+<div class="card"><b>Completed lessons</b>${state.done.length?state.done.map(x=>`<p>✅ ${x}</p>`).join(""):'<p class="muted">Start your first lesson to see progress here.</p>'}</div>
+<button class="secondary" onclick="resetProgress()">Reset progress</button>`}
+function go(t){tab=t;document.querySelectorAll(".bottom button").forEach(b=>b.classList.toggle("active",b.dataset.tab===t));let views={home,learn,speak,practice,progress,chat,vocab,translate};$("#app").innerHTML=(views[t]||home)()}
+function speakText(t){if(!("speechSynthesis"in window)){alert("Text-to-Speech is not supported in this browser.");return}let u=new SpeechSynthesisUtterance(t);u.lang="en-US";u.rate=.85;speechSynthesis.cancel();speechSynthesis.speak(u)}
+function startRecognition(){let SR=window.SpeechRecognition||window.webkitSpeechRecognition;if(!SR){$("#heard").textContent="Speech recognition is not available in this browser. Try Chrome and allow microphone access.";return}let r=new SR();r.lang="en-US";r.interimResults=false;r.onresult=e=>{let v=e.results[0][0].transcript;$("#heard").textContent="You said: "+v;let target="I want to improve my English.";let score=v.toLowerCase().trim()===target.toLowerCase()? "Excellent! Exact sentence.":"Good attempt! Listen once more and try to say each word clearly.";$("#speechResult").innerHTML=`<div class="feedback">${score}</div>`;state.words++;save()};r.onerror=e=>$("#heard").textContent="Microphone issue: "+e.error;r.start();$("#heard").textContent="Listening... speak now."}
+function googleTranslate(){let t=$("#transText").value.trim();let url="https://translate.google.com/?sl=auto&tl=en&text="+encodeURIComponent(t)+"&op=translate";window.open(url,"_blank")}
+function resetProgress(){if(confirm("Reset all learning progress on this device?")){state={done:[],streak:0,last:"",words:0,quiz:0};save();go("progress")}}
+function esc(s){return s.replace(/\\/g,"\\\\").replace(/'/g,"\\'")}
+function escapeHtml(s){return s.replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]))}
+document.querySelectorAll(".bottom button").forEach(b=>b.addEventListener("click",()=>go(b.dataset.tab)));
+go("home");
+</script></body></html>
